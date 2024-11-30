@@ -1,0 +1,35 @@
+{
+  "name": "expense-tracker-app",
+  "version": "1.0.0",
+  "description": "Discover FinTrack, the ultimate personal finance assistant. Seamlessly track your income and spending, adjust entries with flexibility, and achieve your financial goals with a user-friendly interface. 💼💰",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VinayNoogler000/FinTrack.git"
+  },
+  "keywords": [
+    "personal",
+    "finance",
+    "tracker",
+    "income",
+    "earnings",
+    "expenses",
+    "expenditure",
+    "html",
+    "css",
+    "tailwind",
+    "javascript"
+  ],
+  "author": "Vinay Tambey",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/VinayNoogler000/FinTrack/issues"
+  },
+  "homepage": "https://github.com/VinayNoogler000/FinTrack#readme",
+  "devDependencies": {
+    "tailwindcss": "^3.4.15"
+  }
+}
