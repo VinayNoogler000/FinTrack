@@ -5,11 +5,70 @@
 @tailwind utilities;
 
 @layer base {
+    :root {
+        --primary: #3a3a3a;
+        --primary-dark: #302d2d;
+        --green: #008104;
+        --red: #ff0000;
+    }
+
     * {
-        @apply p-0 m-0 border-0 box-content;
+        @apply p-0 m-0 border-0 box-border;
     }
 
     html {
         font-family: "Poppins", sans-serif;
+    }
+
+    body {
+        background-color: var(--primary-dark);
+    }
+
+    h1, h2, h3 {
+        text-align: center;
+    }
+}
+
+@layer components {
+    .container {
+        @apply w-[80%] h-[90%] p-8 text-white bg-[var(--primary)] flex-column gap-7;
+    }
+
+    #balance-section {
+        @apply flex-column;
+    }
+
+    #transactions-section {
+        @apply w-full;
+    }
+
+    .transactions-container {
+        @apply mt-5 flex-column gap-5;
+    }
+
+    .transactions {
+        @apply w-full text-base text-black font-semibold bg-white flex-row justify-between;
+    }
+
+    .transactions .source {
+        @apply ml-3;
+    }
+
+    .amount-info {
+        @apply flex-row justify-center gap-4;
+    }
+
+    .transactions .type {
+        @apply py-1 px-3 text-white bg-[var(--green)];
+    }
+}
+
+@layer utilities {
+    .flex-column {
+        @apply flex flex-col items-center;
+    }
+
+    .flex-row {
+        @apply flex items-center;
     }
 }
