@@ -29,9 +29,39 @@
                         
                         <div class="amount-info">
                             <span class="amount">+ ₹3000</span>
-                            <span class="type">C</span>  
+                            <span class="type credit">C</span>  
                         </div>
                     </div>
+
+                    <div class="transactions">
+                        <span class="source">Electric Bill</span>
+                        
+                        <div class="amount-info">
+                            <span class="amount">- ₹1500</span>
+                            <span class="type debit">D</span>  
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="transaction-form">
+                <h3 class="text-2xl text-black">Add Transaction</h3>
+
+                <label for="source" class="text-base text-black mt-3">Source of Transaction</label>
+                <input id="source" type="text" placeholder="Enter Source..." />
+
+                <div class="btns-container">
+                    <button id="earnings-btn"> 
+                        <span id="earnings">₹0</span> 
+                        <br/> 
+                        Earnings
+                    </button>
+
+                    <button id="expenses-btn">
+                        <span id="expenses">₹0</span> 
+                        <br/> 
+                        Expenses
+                    </button>
                 </div>
             </div>
         </main>

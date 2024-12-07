@@ -31,7 +31,7 @@
 
 @layer components {
     .container {
-        @apply w-[80%] h-[90%] p-8 text-white bg-[var(--primary)] flex-column gap-7;
+        @apply w-[80%] h-[90%] px-8 pt-8 text-white bg-[var(--primary)] rounded-md overflow-hidden flex-column gap-7 relative;
     }
 
     #balance-section {
@@ -39,7 +39,7 @@
     }
 
     #transactions-section {
-        @apply w-full;
+        @apply w-full h-full;
     }
 
     .transactions-container {
@@ -47,7 +47,7 @@
     }
 
     .transactions {
-        @apply w-full text-base text-black font-semibold bg-white flex-row justify-between;
+        @apply w-full text-base text-black font-semibold bg-white rounded-md overflow-hidden flex-row justify-between;
     }
 
     .transactions .source {
@@ -59,7 +59,44 @@
     }
 
     .transactions .type {
-        @apply py-1 px-3 text-white bg-[var(--green)];
+        @apply py-1 px-3 text-white;
+    }
+
+    .transactions .credit {
+        @apply bg-[var(--green)];
+    }
+
+    .transactions .debit {
+        @apply bg-[var(--red)];
+    }
+
+    .transaction-form {
+        @apply w-full p-8 bg-white absolute bottom-0 flex flex-col items-start;
+    }
+
+    .transaction-form input {
+        @apply w-full px-3 py-1.5 rounded text-black text-base;
+        border: 2px solid black;
+    }
+
+    .transaction-form .btns-container {
+        @apply w-full mt-6 flex-row justify-between gap-4;
+    }
+
+    .transaction-form .btns-container button{
+        @apply w-1/2 min-w-28 text-white rounded-md p-4;
+    }
+
+    .transaction-form button span {
+        @apply text-xl;
+    }
+
+    #earnings-btn {
+        @apply bg-[var(--green)];
+    }
+
+    #expenses-btn {
+        @apply bg-[var(--red)];
     }
 }
 
