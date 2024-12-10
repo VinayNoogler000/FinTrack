@@ -74,8 +74,16 @@
         @apply w-full p-8 bg-white absolute bottom-0 flex flex-col items-start;
     }
 
+    .transaction-form .inp-container {
+        @apply w-full mt-3 flex-row justify-between gap-4;
+    }
+
+    .transaction-form .source-input {
+        flex: 2;
+    }
+
     .transaction-form input {
-        @apply w-full px-3 py-1.5 rounded text-black text-base;
+        @apply w-full px-3 py-1.5 rounded text-black text-base focus:outline;
         border: 2px solid black;
     }
 
