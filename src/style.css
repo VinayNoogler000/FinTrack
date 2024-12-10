@@ -31,7 +31,7 @@
 
 @layer components {
     .container {
-        @apply w-[80%] h-[90%] px-8 pt-8 text-white bg-[var(--primary)] rounded-md overflow-hidden flex-column gap-7 relative;
+        @apply w-[80%] h-[90%] max-w-3xl px-8 pt-8 text-white bg-[var(--primary)] rounded-md overflow-hidden flex-column gap-7 relative;
     }
 
     #balance-section {
@@ -79,7 +79,11 @@
     }
 
     .transaction-form .source-input {
-        flex: 2;
+        flex: 1;
+    }
+
+    .transaction-form .amount-input {
+        flex: 1;
     }
 
     .transaction-form input {
@@ -92,7 +96,7 @@
     }
 
     .transaction-form .btns-container button{
-        @apply w-1/2 min-w-28 text-white rounded-md p-4 hover-effect;
+        @apply w-1/2 min-w-28 text-white rounded-md p-4 hover-effect opacity-90;
     }
 
     .transaction-form button span {
@@ -105,6 +109,64 @@
 
     #expenses-btn {
         @apply bg-[var(--red)];
+    }
+
+    @media (max-width: 820px) {
+        .transaction-form .source-input, .transaction-form .amount-input {
+            flex: 1;
+        }
+    }
+
+    @media (max-width: 650px) {
+        .container h1 {
+            @apply text-3xl;
+        }
+
+        #balance-section h2 {
+            @apply text-2xl;
+        }
+
+        #balance-section h3, #transactions-section h3, .transaction-form h3 {
+            @apply text-xl;
+        }
+
+        .transactions-container {
+            @apply mt-3 gap-3;
+        }
+
+        .transactions {
+            @apply text-sm;
+        }
+
+        .transaction-form {
+            @apply py-6;
+        }
+
+        .transaction-form label, .transaction-form input {
+            @apply text-sm;
+        }
+
+        .transaction-form .btns-container button{
+            @apply p-3 text-sm;
+        }
+
+        .transaction-form button span {
+            @apply text-lg;
+        }
+    }
+
+    @media (max-width: 500px) {
+        .container {
+            @apply w-[85%] px-5;
+        }
+
+        .transaction-form {
+            @apply p-5;
+        }
+
+        .transaction-form .inp-container, .transaction-form .btns-container {
+            @apply gap-2;
+        }
     }
 }
 
