@@ -86,6 +86,10 @@
         flex: 1;
     }
 
+    .transaction-form label, .transaction-form input {
+        @apply text-lg;
+    }
+
     .transaction-form input {
         @apply w-full px-3 py-1.5 rounded text-black text-base focus:outline;
         border: 2px solid black;
@@ -96,7 +100,7 @@
     }
 
     .transaction-form .btns-container button{
-        @apply w-1/2 min-w-28 text-white rounded-md p-4 hover-effect opacity-90;
+        @apply w-1/2 min-w-28 text-white text-lg rounded-md p-4 hover-effect opacity-90;
     }
 
     .transaction-form button span {
