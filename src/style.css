@@ -107,11 +107,11 @@
         @apply text-xl;
     }
 
-    #earnings-btn {
+    #earningsBtn {
         @apply bg-[var(--green)];
     }
 
-    #expenses-btn {
+    #expensesBtn {
         @apply bg-[var(--red)];
     }
 
