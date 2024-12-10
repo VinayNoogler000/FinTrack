@@ -47,7 +47,7 @@
     }
 
     .transactions {
-        @apply w-full text-base text-black font-semibold bg-white rounded-md overflow-hidden flex-row justify-between;
+        @apply w-full text-base text-black font-semibold bg-white rounded-md overflow-hidden flex-row justify-between cursor-pointer hover-effect;
     }
 
     .transactions .source {
@@ -84,7 +84,7 @@
     }
 
     .transaction-form .btns-container button{
-        @apply w-1/2 min-w-28 text-white rounded-md p-4;
+        @apply w-1/2 min-w-28 text-white rounded-md p-4 hover-effect;
     }
 
     .transaction-form button span {
@@ -107,5 +107,13 @@
 
     .flex-row {
         @apply flex items-center;
+    }
+
+    .hover-effect {
+        @apply transition-all duration-300;
+    }
+
+    .hover-effect:hover {
+        @apply scale-[1.0125] shadow-gray-900 shadow-2xl;
     }
 }
