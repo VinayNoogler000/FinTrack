@@ -55,7 +55,7 @@
     }
 
     .transactions hr {
-        @apply w-10 max-w-full rotate-90 border-2 border-black;
+        @apply w-10 max-w-full rotate-90 border-[1px] border-black;
     }
 
     .transactions .amount-info {
