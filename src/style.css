@@ -54,8 +54,12 @@
         @apply ml-3;
     }
 
-    .amount-info {
-        @apply flex-row justify-center gap-4 pl-1.5 border-l-[1.5px] border-black;
+    .transactions hr {
+        @apply w-10 max-w-full rotate-90 border-2 border-black;
+    }
+
+    .transactions .amount-info {
+        @apply w-fit flex-row justify-center gap-4;
     }
 
     .transactions .type {
