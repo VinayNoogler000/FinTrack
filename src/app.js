@@ -8,21 +8,19 @@ const balanceEl = document.querySelector("#balance");
 
 // ------------ Function to Create & Display `.transactions` element -----------
 const addTransactionEl = (source, amount, transactionCategory) => {
+  // Select the ContainerEl in which the new transaction element will be added:
   const transactionContEl = document.querySelector(".transactions-container"); // transaction-container-element
 
+  // Create the Transaction elements, with it's children elements: 
   const transactionEl = document.createElement("div");
   transactionEl.className = "transactions";
 
   const sourceEl = document.createElement("span");
   sourceEl.className = "source";
   sourceEl.textContent = source;
-  transactionEl.appendChild(sourceEl);
 
-  transactionEl.appendChild(document.createElement("hr"));
-
-  const amountInfoEl = document.createElement("div"); // amount-info-element
-  amountInfoEl.className = "amount-info";
-  transactionEl.appendChild(amountInfoEl);
+  const amtInfoContEl = document.createElement("div"); // amount-info-container-element
+  amtInfoContEl.className = "amount-info";
 
   const amountEl = document.createElement("span");
   amountEl.className = "amount";
@@ -30,20 +28,17 @@ const addTransactionEl = (source, amount, transactionCategory) => {
 
   const transactionTypeEl = document.createElement("span"); // transaction-type-element
   transactionTypeEl.className = "type";
+  transactionTypeEl.classList.add(transactionCategory === "earnings" ? "credit" : "debit");
+  transactionTypeEl.textContent = transactionCategory === "earnings" ? 'C' : 'D';
 
-  if (transactionCategory === "earnings") {
-    transactionTypeEl.classList.add("credit");
-    transactionTypeEl.textContent = "C";
-  } else {
-    transactionTypeEl.classList.add("debit");
-    transactionTypeEl.textContent = "D";
-  }
-  amountInfoEl.append(amountEl, transactionTypeEl);
+  // Add all the Elements on the webpage: 
+  amtInfoContEl.append(amountEl, transactionTypeEl);
+  transactionEl.append(sourceEl, document.createElement("hr"), amtInfoContEl);
 
   transactionContEl.prepend(transactionEl); // add the transactionEl on the webpage
 };
 
-// ----- Auxillary Function to Calculate & Update Earnings, Expenses and Balance --------
+// -------- Auxillary Function to Calculate & Update Earnings, Expenses and Balance --------
 const calculateEarnings = () => {
   finVars.earnings += Number(amountInpEl.value);
   earningsEl.textContent = "₹" + finVars.earnings;
@@ -56,19 +51,26 @@ const calculateExpenses = () => {
 
 const calculateBalance = () => {
   finVars.balance = finVars.earnings - finVars.expenses;
-  balanceEl.textContent =
-    finVars.balance >= 0 ? "₹" + finVars.balance : "- ₹" + Math.abs(finVars.balance);
+  balanceEl.textContent = finVars.balance >= 0 ? "₹" + finVars.balance : "- ₹" + Math.abs(finVars.balance);
 };
 
 // ---------------- Function to Calculate Earnings, Expenses, and Balance -----------------
-const calculateFinancialVariables = (transactionCategory) => {
+const calculateFinancialVariables = (source, amount, transactionCategory) => {
+  const newTransaction = {source, amount, type: undefined, currBalance: undefined};
+
   if (transactionCategory === "earnings") {
+    newTransaction.type = "Credit";
     calculateEarnings();
   } else {
+    newTransaction.type = "Debit";
     calculateExpenses();
   }
 
   calculateBalance();
+  newTransaction.currBalance = finVars.balance; //add the "currBalance" after adding a new transaction
+
+  // Add the new transaction to the "finVars.transactions[]" array:
+  finVars.transactions.push(newTransaction);
 };
 
 // ---------------------------- Initialize Variables as Financial Trackers ----------------------------
@@ -76,6 +78,7 @@ const finVars = {
   earnings: 0,
   expenses: 0,
   balance: 0,
+  transactions: []
 }
 
 // ----------------------- Define Event Listeners & Handlers for Elements --------------------
@@ -85,8 +88,8 @@ transactionFormEl.addEventListener("submit", (event) => {
   let clickedBtn = event.submitter; // used to track the clicked button, either earnings-btn or expenses-btn
   let buttonText = clickedBtn.children[2].innerText.toLowerCase(); // get button text - "earnings" or "expenses"
 
+  calculateFinancialVariables(sourceInpEl.value, amountInpEl.value, buttonText);
   addTransactionEl(sourceInpEl.value, amountInpEl.value, buttonText);
-  calculateFinancialVariables(buttonText);
 
   // Empty the Input-Fields:
   sourceInpEl.value = amountInpEl.value = "";
