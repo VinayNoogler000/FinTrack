@@ -1,5 +1,4 @@
 // ------------------------ Selecting HTML-DOM Elements -----------------------
-const transactionContEl = document.querySelector(".transactions-container"); // transaction-container-element
 const transactionFormEl = document.querySelector(".transaction-form"); //transaction-form-element
 const sourceInpEl = document.querySelector("#sourceInp");
 const amountInpEl = document.querySelector("#amountInp");
@@ -9,6 +8,8 @@ const balanceEl = document.querySelector("#balance");
 
 // ------------ Function to Create & Display `.transactions` element -----------
 const addTransactionEl = (source, amount, transactionCategory) => {
+  const transactionContEl = document.querySelector(".transactions-container"); // transaction-container-element
+
   const transactionEl = document.createElement("div");
   transactionEl.className = "transactions";
 
@@ -39,7 +40,7 @@ const addTransactionEl = (source, amount, transactionCategory) => {
   }
   amountInfoEl.append(amountEl, transactionTypeEl);
 
-  transactionContEl.appendChild(transactionEl); // add the transactionEl on the webpage
+  transactionContEl.prepend(transactionEl); // add the transactionEl on the webpage
 };
 
 // ----- Auxillary Function to Calculate & Update Earnings, Expenses and Balance --------
@@ -74,7 +75,7 @@ const calculateFinancialVariables = (transactionCategory) => {
 const finVars = {
   earnings: 0,
   expenses: 0,
-  balance: undefined,
+  balance: 0,
 }
 
 // ----------------------- Define Event Listeners & Handlers for Elements --------------------
