@@ -44,19 +44,19 @@ const addTransactionEl = (source, amount, transactionCategory) => {
 
 // ----- Auxillary Function to Calculate & Update Earnings, Expenses and Balance --------
 const calculateEarnings = () => {
-  totalEarnings += Number(amountInpEl.value);
-  earningsEl.textContent = "₹" + totalEarnings;
+  finVars.earnings += Number(amountInpEl.value);
+  earningsEl.textContent = "₹" + finVars.earnings;
 };
 
 const calculateExpenses = () => {
-  totalExpenses += Number(amountInpEl.value);
-  expensesEl.textContent = "₹" + totalExpenses;
+  finVars.expenses += Number(amountInpEl.value);
+  expensesEl.textContent = "₹" + finVars.expenses;
 };
 
 const calculateBalance = () => {
-  balance = totalEarnings - totalExpenses;
+  finVars.balance = finVars.earnings - finVars.expenses;
   balanceEl.textContent =
-    balance >= 0 ? "₹" + balance : "- ₹" + Math.abs(balance);
+    finVars.balance >= 0 ? "₹" + finVars.balance : "- ₹" + Math.abs(finVars.balance);
 };
 
 // ---------------- Function to Calculate Earnings, Expenses, and Balance -----------------
@@ -70,10 +70,12 @@ const calculateFinancialVariables = (transactionCategory) => {
   calculateBalance();
 };
 
-// ---------------------------- Initialize Variables as Trackers ----------------------------
-let totalEarnings = 0;
-let totalExpenses = 0;
-let balance;
+// ---------------------------- Initialize Variables as Financial Trackers ----------------------------
+const finVars = {
+  earnings: 0,
+  expenses: 0,
+  balance: undefined,
+}
 
 // ----------------------- Define Event Listeners & Handlers for Elements --------------------
 transactionFormEl.addEventListener("submit", (event) => {
