@@ -1,3 +1,6 @@
+// ----------- Require UUID Library for Generating Unique Transaction IDs: -----------
+import { v4 as uuidv4 } from 'https://cdn.skypack.dev/uuid';
+
 // ------------------------ Selecting HTML-DOM Elements -----------------------
 const transactionFormEl = document.querySelector(".transaction-form"); //transaction-form-element
 const sourceInpEl = document.querySelector("#sourceInp");
@@ -5,12 +8,10 @@ const amountInpEl = document.querySelector("#amountInp");
 const earningsEl = document.querySelector("#earnings");
 const expensesEl = document.querySelector("#expenses");
 const balanceEl = document.querySelector("#balance");
+const transactionContEl = document.querySelector(".transactions-container"); // transaction-container-element
 
 // ------------ Function to Create & Display `.transactions` element -----------
 const addTransactionEl = (source, amount, transactionCategory) => {
-  // Select the ContainerEl in which the new transaction element will be added:
-  const transactionContEl = document.querySelector(".transactions-container"); // transaction-container-element
-
   // Create the Transaction elements, with it's children elements: 
   const transactionEl = document.createElement("div");
   transactionEl.className = "transactions";
@@ -56,7 +57,7 @@ const calculateBalance = () => {
 
 // ---------------- Function to Calculate Earnings, Expenses, and Balance -----------------
 const calculateFinancialVariables = (source, amount, transactionCategory) => {
-  const newTransaction = {source, amount, type: undefined, currBalance: undefined};
+  const newTransaction = {source, amount, type: undefined, currBalance: undefined, id: uuidv4()};
 
   if (transactionCategory === "earnings") {
     newTransaction.type = "Credit";
