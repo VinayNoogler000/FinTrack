@@ -193,6 +193,36 @@
             @apply gap-2;
         }
     }
+
+    @media (max-width: 400px) {
+        .container h1 {
+            @apply text-2xl;
+        }
+
+        #balance-section h2 {
+            @apply text-xl;
+        }
+
+        #balance-section h3, #transactions-section h3, .transaction-form h3 {
+            @apply text-lg;
+        }
+
+        .transactions {
+            @apply text-xs;
+        }
+
+        .transactions .options {
+            @apply gap-3;
+        }
+
+        .transactions .options img {
+            @apply w-3 h-auto;
+        }
+
+        .transaction-form input {
+            @apply text-xs;
+        }
+    }
 }
 
 @layer utilities {
