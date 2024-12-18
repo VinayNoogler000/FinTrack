@@ -1,63 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8"/>
-        <meta name="author" content="Vinay Tambey"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <title>FinTack - An Earnings & Expense Tracker | Vinay Tambey</title>
-        <link rel="icon" type="image/png" sizes="32x32" href="../assets/budget.png" />
-        <link rel="stylesheet" href="../dist/output.css"/>
-    </head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="author" content="Vinay Tambey" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FinTack - An Earnings & Expense Tracker | Vinay Tambey</title>
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../assets/budget.png"
+    />
+    <link rel="stylesheet" href="../dist/output.css" />
+  </head>
 
-    <body class="h-screen grid place-items-center">
-        
-        <main class="container">
-            <h1 class="text-4xl font-semibold">Expense Tracker</h1>
+  <body class="h-screen grid place-items-center">
+    <main class="container">
+      <h1 class="text-4xl font-semibold">Financial Tracker</h1>
 
-            <section id="balance-section">
-                <h2 class="text-3xl" id="balance">₹0</h2>
-                <h3 class="text-2xl">Your Balance</h3>
-            </section>
+      <section id="balance-section">
+        <h2 class="text-3xl" id="balance">₹0</h2>
+        <h3 class="text-2xl">Your Balance</h3>
+      </section>
 
-            <section id="transactions-section">
-                <h3 class="text-2xl text-start">Transactions:</h3>
-                <hr/>
+      <section id="transactions-section">
+        <h3 class="text-2xl text-start">Transactions:</h3>
+        <hr />
 
-                <div class="transactions-container">
-                </div>
-            </section>
+        <div class="transactions-container"></div>
+      </section>
 
-            <form class="transaction-form">
-                <h3 class="text-2xl text-black">Add Transaction</h3>
+      <form class="transaction-form">
+        <h3 class="text-2xl text-black">Add Transaction</h3>
 
-                <div class="inp-container">
-                    <div class="source-input">
-                        <label for="sourceInp" class="text-base text-black">Source</label>
-                        <input id="sourceInp" type="text" placeholder="Enter Source..." required/>
-                    </div>
+        <div class="inp-container">
+          <div class="source-input">
+            <label for="sourceInp" class="text-base text-black">Source</label>
+            <input id="sourceInp" type="text" placeholder="Enter Source..." required />
+          </div>
 
-                    <div class="amount-input">
-                        <label for="amountInp" class="text-base text-black">Amount</label>
-                        <input id="amountInp" type="number" placeholder="Enter Amount..." required/>
-                    </div>
-                </div>
+          <div class="amount-input">
+            <label for="amountInp" class="text-base text-black">Amount</label>
+            <input id="amountInp" type="number" placeholder="Enter Amount..." required />
+          </div>
+        </div>
 
-                <div class="btns-container">
-                    <button type="submit" id="earningsBtn"> 
-                        <span id="earnings">₹0</span> 
-                        <br/> 
-                        <p>Earnings</p>
-                    </button>
+        <div class="btns-container">
+          <button type="submit" id="earningsBtn">
+            <span id="earnings">₹0</span>
+            <br />
+            <p>Earnings</p>
+          </button>
 
-                    <button type="submit" id="expensesBtn">
-                        <span id="expenses">₹0</span> 
-                        <br/> 
-                        <p>Expenses</p>
-                    </button>
-                </div>
-            </form>
-        </main>
+          <button type="submit" id="expensesBtn">
+            <span id="expenses">₹0</span>
+            <br />
+            <p>Expenses</p>
+          </button>
+        </div>
+      </form>
+    </main>
 
-        <script src="app.js"></script>
-    </body>
+    <script type="module" src="app.js"></script>
+  </body>
 </html>

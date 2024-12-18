@@ -47,7 +47,11 @@
     }
 
     .transactions {
-        @apply w-full text-base text-black font-semibold bg-white rounded-md overflow-hidden flex-row justify-between cursor-pointer hover-effect opacity-85;
+        @apply w-full text-base text-black font-semibold bg-white rounded-md overflow-hidden flex flex-col smooth-transition hover-effect opacity-85;
+    }
+
+    .transactions .main {
+        @apply min-w-full flex-row justify-between flex-[1] gap-2;
     }
 
     .transactions .source {
@@ -55,7 +59,7 @@
     }
 
     .transactions hr {
-        @apply w-10 max-w-full rotate-90 border-[1px] border-black;
+        @apply w-8 max-w-full rotate-90 border-[1px];
     }
 
     .transactions .amount-info {
@@ -72,6 +76,18 @@
 
     .transactions .debit {
         @apply bg-[var(--red)];
+    }
+
+    .transactions .options {
+        @apply hidden min-w-full px-3 py-1 border-t-2 items-center gap-5 flex-[1] smooth-transition;
+    }
+
+    .transactions .options button {
+        @apply cursor-pointer;
+    }
+
+    .transactions .options img {
+        @apply w-3.5 h-auto;
     }
 
     .transaction-form {
@@ -104,7 +120,7 @@
     }
 
     .transaction-form .btns-container button{
-        @apply w-1/2 min-w-28 text-white text-lg rounded-md p-4 hover-effect opacity-90;
+        @apply w-1/2 min-w-28 text-white text-lg rounded-md p-4 smooth-transition hover-effect opacity-90;
     }
 
     .transaction-form button span {
@@ -119,6 +135,7 @@
         @apply bg-[var(--red)];
     }
 
+    
     @media (max-width: 820px) {
         .transaction-form .source-input, .transaction-form .amount-input {
             flex: 1;
@@ -187,7 +204,7 @@
         @apply flex items-center;
     }
 
-    .hover-effect {
+    .smooth-transition {
         @apply transition-all duration-300;
     }
 

@@ -1,42 +1,61 @@
 // ----------- Require UUID Library for Generating Unique Transaction IDs: -----------
 import { v4 as uuidv4 } from 'https://cdn.skypack.dev/uuid';
 
-// ------------------------ Selecting HTML-DOM Elements -----------------------
+// ------------------------ Select the Globally Required HTML-DOM Elements -----------------------
 const transactionFormEl = document.querySelector(".transaction-form"); //transaction-form-element
 const sourceInpEl = document.querySelector("#sourceInp");
 const amountInpEl = document.querySelector("#amountInp");
 const earningsEl = document.querySelector("#earnings");
 const expensesEl = document.querySelector("#expenses");
 const balanceEl = document.querySelector("#balance");
-const transactionContEl = document.querySelector(".transactions-container"); // transaction-container-element
+
+// ------------ Function to Display Options of '.transactions' element -----------
+const displayMoreOptions = (element) => {
+  const optionsContEl = element.querySelector(".options"); //options-container-element
+  optionsContEl.style.display = optionsContEl.style.display === "flex" ? "none" : "flex";
+};
 
 // ------------ Function to Create & Display `.transactions` element -----------
 const addTransactionEl = (source, amount, transactionCategory) => {
-  // Create the Transaction elements, with it's children elements: 
+  const isCredit = transactionCategory === "earnings" ? true : false; //to make the tertiary operation smaller, and to avoid redundancy
+
+  //Select all the required HTML-DOM elements:
+  const transactionContEl = document.querySelector(".transactions-container"); // transaction-container-element
   const transactionEl = document.createElement("div");
+  const transMainContEl = document.createElement("div"); //transaction-main-container-element
+  const transOptionsContEl = document.createElement("div"); //transaction-options-container-element
+
+  // Create the Transaction elements, with it's children elements: 
   transactionEl.className = "transactions";
 
-  const sourceEl = document.createElement("span");
-  sourceEl.className = "source";
-  sourceEl.textContent = source;
+  transMainContEl.className = "main";
+  transMainContEl.innerHTML = `
+  <span class="source">${source}</span>
+  <hr />
+  <div class="amount-info">
+    <span class="amount">${isCredit ? "+ ₹" + amount : "- ₹" + amount}</span>
+    <span class="type ${isCredit ? "credit" : "debit"}">${isCredit ? 'C' : 'D'}</span>
+  </div>`;
 
-  const amtInfoContEl = document.createElement("div"); // amount-info-container-element
-  amtInfoContEl.className = "amount-info";
+  transOptionsContEl.className = "options";
+  transOptionsContEl.innerHTML = `
+    <abbr title="Edit Transaction">
+      <button>
+        <img src="../assets/pencil.svg" alt="Pencil" />
+      </button>
+    </abbr>
 
-  const amountEl = document.createElement("span");
-  amountEl.className = "amount";
-  amountEl.textContent = transactionCategory === "earnings" ? "+ ₹" + amount : "- ₹" + amount;
-
-  const transactionTypeEl = document.createElement("span"); // transaction-type-element
-  transactionTypeEl.className = "type";
-  transactionTypeEl.classList.add(transactionCategory === "earnings" ? "credit" : "debit");
-  transactionTypeEl.textContent = transactionCategory === "earnings" ? 'C' : 'D';
+    <abbr title="Delete Transaction">
+      <button>
+        <img src="../assets/trash_can.svg" alt="Trash Can" />
+      </button>
+    </abbr>`;
 
   // Add all the Elements on the webpage: 
-  amtInfoContEl.append(amountEl, transactionTypeEl);
-  transactionEl.append(sourceEl, document.createElement("hr"), amtInfoContEl);
-
+  transactionEl.append(transMainContEl, transOptionsContEl);
   transactionContEl.prepend(transactionEl); // add the transactionEl on the webpage
+
+  transactionEl.addEventListener("click", () => displayMoreOptions(transactionEl));
 };
 
 // -------- Auxillary Function to Calculate & Update Earnings, Expenses and Balance --------
