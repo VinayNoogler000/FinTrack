@@ -1,5 +1,6 @@
 // ----------- Require UUID Library for Generating Unique Transaction IDs: -----------
 import { v4 as uuidv4 } from 'https://cdn.skypack.dev/uuid';
+import swal from 'https://cdn.skypack.dev/sweetalert';
 
 // ------------------------ Select the Globally Required HTML-DOM Elements -----------------------
 const transactionFormEl = document.querySelector(".transaction-form"); //transaction-form-element
@@ -9,11 +10,11 @@ const earningsEl = document.querySelector("#earnings");
 const expensesEl = document.querySelector("#expenses");
 const balanceEl = document.querySelector("#balance");
 
-// ----------------- Function to Display Options of '.transactions' element ----------------
+// ----------------- Function to Edit a specific Transaction ----------------
 
 // ------- Auxillary Function to Define Event Listeners and Handlers for the elements ------
 const defineEvents = (transSecEls) => {
-  const {transMainContEl, transOptionsContEl, editBtnEl, delBtnEl} = transSecEls;
+  const {transactionEl, transMainContEl, transOptionsContEl, editBtnEl, delBtnEl} = transSecEls;
   transMainContEl.addEventListener("click", () => transOptionsContEl.style.display = transOptionsContEl.style.display === "flex" ? "none" : "flex");
   editBtnEl.addEventListener("click", (event) => {
     event.stopPropagation();
@@ -22,7 +23,22 @@ const defineEvents = (transSecEls) => {
 
   delBtnEl.addEventListener("click", (event) => {
     event.stopPropagation();
-    console.log("delBtn clicked!");
+    swal({
+      title: "Are you sure?", 
+      text: "This will delete your transaction and you need to add it from scratch in order to revert back!",
+      icon: "warning",
+      buttons: [true, "Yes"],
+      dangerMode: true,
+    }).then((result) => {
+      if(result) {
+        transactionEl.remove();
+        swal("You transaction has been deleted!", {icon: "success"});
+      }
+      else {
+        swal("Your transaction is safe!", {icon: "info"});
+      }
+    })
+    
   });
 }
 
