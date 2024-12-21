@@ -10,18 +10,25 @@ const expensesEl = document.querySelector("#expenses");
 const balanceEl = document.querySelector("#balance");
 
 // ----------------- Function to Display Options of '.transactions' element ----------------
-const displayMoreOptions = (element) => {
-  const optionsContEl = element.querySelector(".options"); //options-container-element
-  optionsContEl.style.display = optionsContEl.style.display === "flex" ? "none" : "flex";
-};
 
 // ------- Auxillary Function to Define Event Listeners and Handlers for the elements ------
-const defineEvents = (transactionEl) => {
-  transactionEl.addEventListener("click", () => displayMoreOptions(transactionEl));
+const defineEvents = (transSecEls) => {
+  const {transMainContEl, transOptionsContEl, editBtnEl, delBtnEl} = transSecEls;
+  transMainContEl.addEventListener("click", () => transOptionsContEl.style.display = transOptionsContEl.style.display === "flex" ? "none" : "flex");
+  editBtnEl.addEventListener("click", (event) => {
+    event.stopPropagation();
+    console.log("editBtn clicked!");
+  });
+
+  delBtnEl.addEventListener("click", (event) => {
+    event.stopPropagation();
+    console.log("delBtn clicked!");
+  });
 }
 
 // ---------- Auxillary Function to Add and Display the elements on the Webpage ------------
-const renderElements = (transactionEl, transMainContEl, transOptionsContEl, transactionContEl) => {
+const renderElements = (transSecEls, transactionContEl) => {
+  const {transactionEl, transMainContEl, transOptionsContEl} = transSecEls;
   transactionEl.append(transMainContEl, transOptionsContEl);
   transactionContEl.prepend(transactionEl); // add the transactionEl on the webpage
 }
@@ -57,7 +64,11 @@ const createElements = (source, amount, isCredit) => {
       </button>
     </abbr>`;
 
-  return { transactionEl, transMainContEl, transOptionsContEl };
+  return { 
+    transactionEl, transMainContEl, transOptionsContEl, 
+    editBtnEl: transOptionsContEl.querySelector(".editBtn"), 
+    delBtnEl: transOptionsContEl.querySelector(".deleteBtn") 
+  };
 }
 
 // ------------ Function to Create & Display `.transactions` element -----------
@@ -68,13 +79,13 @@ const addTransactionEl = (source, amount, transactionCategory) => {
   const transactionContEl = document.querySelector(".transactions-container"); // transaction-container-element
 
   // Create all the required HTML-DOM Elements:
-  const {transactionEl, transMainContEl, transOptionsContEl} = createElements(source, amount, isCredit);
+  const transSecEls = createElements(source, amount, isCredit); //'transSecEls' stores all the important elements of the 'transaction-section'
 
   // Add all the Elements on the webpage: 
-  renderElements(transactionEl, transMainContEl, transOptionsContEl, transactionContEl);
+  renderElements(transSecEls, transactionContEl);
 
   // Define Event Listeners & Handlers for for the required Elements:
-  defineEvents(transactionEl);
+  defineEvents(transSecEls);
 };
 
 // -------- Auxillary Functions to Calculate & Update Earnings, Expenses and Balance --------
