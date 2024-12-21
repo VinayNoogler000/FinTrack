@@ -9,23 +9,29 @@ const earningsEl = document.querySelector("#earnings");
 const expensesEl = document.querySelector("#expenses");
 const balanceEl = document.querySelector("#balance");
 
-// ------------ Function to Display Options of '.transactions' element -----------
+// ----------------- Function to Display Options of '.transactions' element ----------------
 const displayMoreOptions = (element) => {
   const optionsContEl = element.querySelector(".options"); //options-container-element
   optionsContEl.style.display = optionsContEl.style.display === "flex" ? "none" : "flex";
 };
 
-// ------------ Function to Create & Display `.transactions` element -----------
-const addTransactionEl = (source, amount, transactionCategory) => {
-  const isCredit = transactionCategory === "earnings" ? true : false; //to make the tertiary operation smaller, and to avoid redundancy
+// ------- Auxillary Function to Define Event Listeners and Handlers for the elements ------
+const defineEvents = (transactionEl) => {
+  transactionEl.addEventListener("click", () => displayMoreOptions(transactionEl));
+}
 
-  //Select all the required HTML-DOM elements:
-  const transactionContEl = document.querySelector(".transactions-container"); // transaction-container-element
+// ---------- Auxillary Function to Add and Display the elements on the Webpage ------------
+const renderElements = (transactionEl, transMainContEl, transOptionsContEl, transactionContEl) => {
+  transactionEl.append(transMainContEl, transOptionsContEl);
+  transactionContEl.prepend(transactionEl); // add the transactionEl on the webpage
+}
+
+// ------------ Auxillary Function to Create all the required HTML-DOM Elements ------------
+const createElements = () => {
   const transactionEl = document.createElement("div");
   const transMainContEl = document.createElement("div"); //transaction-main-container-element
   const transOptionsContEl = document.createElement("div"); //transaction-options-container-element
 
-  // Create the Transaction elements, with it's children elements: 
   transactionEl.className = "transactions";
 
   transMainContEl.className = "main";
@@ -34,31 +40,44 @@ const addTransactionEl = (source, amount, transactionCategory) => {
   <hr />
   <div class="amount-info">
     <span class="amount">${isCredit ? "+ ₹" + amount : "- ₹" + amount}</span>
-    <span class="type ${isCredit ? "credit" : "debit"}">${isCredit ? 'C' : 'D'}</span>
+    <span class="type ${isCredit ? 'credit' : 'debit'}">${isCredit ? 'C' : 'D'}</span>
   </div>`;
 
   transOptionsContEl.className = "options";
   transOptionsContEl.innerHTML = `
     <abbr title="Edit Transaction">
-      <button>
+      <button class="editBtn">
         <img src="../assets/pencil.svg" alt="Pencil" />
       </button>
     </abbr>
 
     <abbr title="Delete Transaction">
-      <button>
+      <button class="deleteBtn">
         <img src="../assets/trash_can.svg" alt="Trash Can" />
       </button>
     </abbr>`;
 
-  // Add all the Elements on the webpage: 
-  transactionEl.append(transMainContEl, transOptionsContEl);
-  transactionContEl.prepend(transactionEl); // add the transactionEl on the webpage
+  return { transactionEl, transMainContEl, transOptionsContEl };
+}
 
-  transactionEl.addEventListener("click", () => displayMoreOptions(transactionEl));
+// ------------ Function to Create & Display `.transactions` element -----------
+const addTransactionEl = (source, amount, transactionCategory) => {
+  const isCredit = transactionCategory === "earnings" ? true : false; //to make the tertiary operation smaller, and to avoid redundancy
+
+  // Select the required "transaction-container" HTML element:
+  const transactionContEl = document.querySelector(".transactions-container"); // transaction-container-element
+
+  // Create all the required HTML-DOM Elements:
+  const {transactionEl, transMainContEl, transOptionsContEl} = createElements();
+
+  // Add all the Elements on the webpage: 
+  renderElements(transactionEl, transMainContEl, transOptionsContEl, transactionContEl);
+
+  // Define Event Listeners & Handlers for for the required Elements:
+  defineEvents(transactionEl);
 };
 
-// -------- Auxillary Function to Calculate & Update Earnings, Expenses and Balance --------
+// -------- Auxillary Functions to Calculate & Update Earnings, Expenses and Balance --------
 const calculateEarnings = () => {
   finVars.earnings += Number(amountInpEl.value);
   earningsEl.textContent = "₹" + finVars.earnings;
@@ -101,7 +120,7 @@ const finVars = {
   transactions: []
 }
 
-// ----------------------- Define Event Listeners & Handlers for Elements --------------------
+// ----------------------- Define Event Listeners & Handlers for Transaction-Form --------------------
 transactionFormEl.addEventListener("submit", (event) => {
   event.preventDefault();
 
