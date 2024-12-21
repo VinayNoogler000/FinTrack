@@ -27,7 +27,7 @@ const renderElements = (transactionEl, transMainContEl, transOptionsContEl, tran
 }
 
 // ------------ Auxillary Function to Create all the required HTML-DOM Elements ------------
-const createElements = () => {
+const createElements = (source, amount, isCredit) => {
   const transactionEl = document.createElement("div");
   const transMainContEl = document.createElement("div"); //transaction-main-container-element
   const transOptionsContEl = document.createElement("div"); //transaction-options-container-element
@@ -68,7 +68,7 @@ const addTransactionEl = (source, amount, transactionCategory) => {
   const transactionContEl = document.querySelector(".transactions-container"); // transaction-container-element
 
   // Create all the required HTML-DOM Elements:
-  const {transactionEl, transMainContEl, transOptionsContEl} = createElements();
+  const {transactionEl, transMainContEl, transOptionsContEl} = createElements(source, amount, isCredit);
 
   // Add all the Elements on the webpage: 
   renderElements(transactionEl, transMainContEl, transOptionsContEl, transactionContEl);
