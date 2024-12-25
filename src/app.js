@@ -10,35 +10,48 @@ const earningsEl = document.querySelector("#earnings");
 const expensesEl = document.querySelector("#expenses");
 const balanceEl = document.querySelector("#balance");
 
+// ----------------- Function to Delete a specific Transaction ----------------
+const deleteTransaction = (transactionEl) => {
+  swal({
+    title: "Are you sure?", 
+    text: "This action will delete your transaction and you need to add it from scratch in order to revert back!",
+    icon: "warning",
+    buttons: [true, "Yes"],
+    dangerMode: true,
+  }).then((result) => {
+    if(result) {
+      transactionEl.remove();
+      swal("You transaction has been deleted!", {icon: "success"});
+    }
+    else {
+      swal("Your transaction is safe!", {icon: "info"});
+    }
+  });
+}
+
 // ----------------- Function to Edit a specific Transaction ----------------
+const editTransaction = (transMainContEl) => {
+  let source = transMainContEl.querySelector(".source").textContent;
+  let amount = Number(transMainContEl.querySelector(".amount").textContent.slice(3));
+  
+  sourceInpEl.value = source;
+  amountInpEl.value = amount;
+}
 
 // ------- Auxillary Function to Define Event Listeners and Handlers for the elements ------
 const defineEvents = (transSecEls) => {
   const {transactionEl, transMainContEl, transOptionsContEl, editBtnEl, delBtnEl} = transSecEls;
+  
   transMainContEl.addEventListener("click", () => transOptionsContEl.style.display = transOptionsContEl.style.display === "flex" ? "none" : "flex");
+  
   editBtnEl.addEventListener("click", (event) => {
     event.stopPropagation();
-    console.log("editBtn clicked!");
+    editTransaction(transMainContEl);
   });
 
   delBtnEl.addEventListener("click", (event) => {
     event.stopPropagation();
-    swal({
-      title: "Are you sure?", 
-      text: "This will delete your transaction and you need to add it from scratch in order to revert back!",
-      icon: "warning",
-      buttons: [true, "Yes"],
-      dangerMode: true,
-    }).then((result) => {
-      if(result) {
-        transactionEl.remove();
-        swal("You transaction has been deleted!", {icon: "success"});
-      }
-      else {
-        swal("Your transaction is safe!", {icon: "info"});
-      }
-    })
-    
+    deleteTransaction(transactionEl);
   });
 }
 
@@ -50,12 +63,18 @@ const renderElements = (transSecEls, transactionContEl) => {
 }
 
 // ------------ Auxillary Function to Create all the required HTML-DOM Elements ------------
-const createElements = (source, amount, isCredit) => {
+const createElements = (transactionObj) => {
+  // Extract the required properties from the 'transactionObj':
+  const {source, amount, type, id} = transactionObj;
+  const isCredit = type === "Credit";
+
+  // Create all the required HTML-DOM Elements:
   const transactionEl = document.createElement("div");
   const transMainContEl = document.createElement("div"); //transaction-main-container-element
   const transOptionsContEl = document.createElement("div"); //transaction-options-container-element
 
   transactionEl.className = "transactions";
+  transactionEl.id = id;
 
   transMainContEl.className = "main";
   transMainContEl.innerHTML = `
@@ -88,14 +107,12 @@ const createElements = (source, amount, isCredit) => {
 }
 
 // ------------ Function to Create & Display `.transactions` element -----------
-const addTransactionEl = (source, amount, transactionCategory) => {
-  const isCredit = transactionCategory === "earnings" ? true : false; //to make the tertiary operation smaller, and to avoid redundancy
-
+const addTransactionEl = (transactionObj) => {
   // Select the required "transaction-container" HTML element:
   const transactionContEl = document.querySelector(".transactions-container"); // transaction-container-element
 
   // Create all the required HTML-DOM Elements:
-  const transSecEls = createElements(source, amount, isCredit); //'transSecEls' stores all the important elements of the 'transaction-section'
+  const transSecEls = createElements(transactionObj); //'transSecEls' stores all the important elements of the 'transaction-section'
 
   // Add all the Elements on the webpage: 
   renderElements(transSecEls, transactionContEl);
@@ -120,7 +137,7 @@ const calculateBalance = () => {
   balanceEl.textContent = finVars.balance >= 0 ? "₹" + finVars.balance : "- ₹" + Math.abs(finVars.balance);
 };
 
-// ---------------- Function to Calculate Earnings, Expenses, and Balance -----------------
+// ------- Function to Calculate Earnings, Expenses, and Balance & Return the New Transaction --------
 const calculateFinancialVariables = (source, amount, transactionCategory) => {
   const newTransaction = {source, amount, type: undefined, currBalance: undefined, id: uuidv4()};
 
@@ -137,6 +154,8 @@ const calculateFinancialVariables = (source, amount, transactionCategory) => {
 
   // Add the new transaction to the "finVars.transactions[]" array:
   finVars.transactions.push(newTransaction);
+
+  return newTransaction;
 };
 
 // ---------------------------- Initialize Variables as Financial Trackers ----------------------------
@@ -154,8 +173,8 @@ transactionFormEl.addEventListener("submit", (event) => {
   let clickedBtn = event.submitter; // used to track the clicked button, either earnings-btn or expenses-btn
   let buttonText = clickedBtn.children[2].innerText.toLowerCase(); // get button text - "earnings" or "expenses"
 
-  calculateFinancialVariables(sourceInpEl.value, amountInpEl.value, buttonText);
-  addTransactionEl(sourceInpEl.value, amountInpEl.value, buttonText);
+  const newTransaction = calculateFinancialVariables(sourceInpEl.value, amountInpEl.value, buttonText);
+  addTransactionEl(newTransaction);
 
   // Empty the Input-Fields:
   sourceInpEl.value = amountInpEl.value = "";
