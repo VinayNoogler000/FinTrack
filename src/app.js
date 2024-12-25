@@ -18,12 +18,13 @@ const deleteTransaction = (transactionEl) => {
     icon: "warning",
     buttons: [true, "Yes"],
     dangerMode: true,
-  }).then((result) => {
+  }).then((result) => { //if the user clicks on the "Yes" button
     if(result) {
       transactionEl.remove();
+      finVars.transactions = finVars.transactions.filter(transaction => transaction.id !== transactionEl.id);
       swal("You transaction has been deleted!", {icon: "success"});
     }
-    else {
+    else { //if the user clicks on the "Cancel" button
       swal("Your transaction is safe!", {icon: "info"});
     }
   });
