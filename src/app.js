@@ -22,32 +22,34 @@ const deleteTransaction = (transactionEl) => {
     if(result) {
       transactionEl.remove();
       finVars.transactions = finVars.transactions.filter(transaction => transaction.id !== transactionEl.id);
-      swal("You transaction has been deleted!", {icon: "success"});
+      swal("Deleted!", "Your transaction has been deleted.", {icon: "success"});
     }
     else { //if the user clicks on the "Cancel" button
-      swal("Your transaction is safe!", {icon: "info"});
+      swal("Safe!", "Your transaction is safe and secure.", {icon: "info"});
     }
   });
 }
 
 // ----------------- Function to Edit a specific Transaction ----------------
-const editTransaction = (transMainContEl) => {
-  let source = transMainContEl.querySelector(".source").textContent;
-  let amount = Number(transMainContEl.querySelector(".amount").textContent.slice(3));
-  
-  sourceInpEl.value = source;
-  amountInpEl.value = amount;
+const editTransaction = (transMainContEl, transactionObj) => {
+  // Select the 'source' and 'amount' elements of the 'transactionEl' for updating them:
+  const sourceEl = transMainContEl.querySelector(".source");
+  const amountEl = transMainContEl.querySelector(".amount");
+
+  // Extract the required properties from the 'transactionEl' and add them to the Input-Fields:
+  sourceInpEl.value = transactionObj.source;
+  amountInpEl.value = transactionObj.amount;
 }
 
 // ------- Auxillary Function to Define Event Listeners and Handlers for the elements ------
-const defineEvents = (transSecEls) => {
+const defineEvents = (transSecEls, transactionObj) => {
   const {transactionEl, transMainContEl, transOptionsContEl, editBtnEl, delBtnEl} = transSecEls;
   
   transMainContEl.addEventListener("click", () => transOptionsContEl.style.display = transOptionsContEl.style.display === "flex" ? "none" : "flex");
   
   editBtnEl.addEventListener("click", (event) => {
     event.stopPropagation();
-    editTransaction(transMainContEl);
+    editTransaction(transMainContEl, transactionObj);
   });
 
   delBtnEl.addEventListener("click", (event) => {
@@ -119,7 +121,7 @@ const addTransactionEl = (transactionObj) => {
   renderElements(transSecEls, transactionContEl);
 
   // Define Event Listeners & Handlers for for the required Elements:
-  defineEvents(transSecEls);
+  defineEvents(transSecEls, transactionObj);
 };
 
 // -------- Auxillary Functions to Calculate & Update Earnings, Expenses and Balance --------
