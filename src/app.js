@@ -45,14 +45,16 @@ const deleteTransaction = (transactionEl) => {
 }
 
 // ----------------- Function to Edit a specific Transaction ----------------
-const editTransaction = (transMainContEl, transactionObj) => {
+const editTransaction = (transactionEl) => {
   // Select the 'source' and 'amount' elements of the 'transactionEl' for updating them:
-  const sourceEl = transMainContEl.querySelector(".source");
-  const amountEl = transMainContEl.querySelector(".amount");
+  const sourceEl = transactionEl.querySelector(".source");
+  const amountEl = transactionEl.querySelector(".amount");
 
   // Extract the required properties from the 'transactionEl' and add them to the Input-Fields:
-  sourceInpEl.value = transactionObj.source;
-  amountInpEl.value = transactionObj.amount;
+  sourceInpEl.value = sourceEl.textContent;
+  amountInpEl.value = amountEl.textContent.slice(3); //slice the first 3 characters from the 'amount' text, i.e, "-/+ ₹"
+
+  finVars.editTransactionEl = transactionEl; //store the 'transactionEl' which is being edited
 }
 
 // ------- Auxillary Function to Define Event Listeners and Handlers for the elements ------
@@ -175,24 +177,89 @@ const calculateFinancialVariables = (source, amount, transactionCategory) => {
   return newTransaction;
 };
 
-// ---------------------------- Initialize Variables as Financial Trackers ----------------------------
-const finVars = {
-  earnings: 0,
-  expenses: 0,
-  balance: 0,
-  transactions: []
+// ---------------------------- Function to Update the Transaction ----------------------------
+const updateTransaction = (buttonText) => {
+  // Find the transaction which is being edited and update it:
+  const transactionToEdit = finVars.transactions.find((transaction) => transaction.id === finVars.editTransactionEl.id);
+  const editTransElSource = finVars.editTransactionEl.querySelector(".source");
+  const editTransElAmount = finVars.editTransactionEl.querySelector(".amount");
+  const editTransElType = finVars.editTransactionEl.querySelector(".type");
+  let isCredit = buttonText === "earnings";
+
+  // Update the Earnings, Expenses, and Balance:
+  if(isCredit) {
+    finVars.earnings = (finVars.earnings - transactionToEdit.amount) + Number(amountInpEl.value);
+    earningsEl.textContent = "₹" + finVars.earnings;
+  }
+  else {
+    finVars.expenses = (finVars.expenses - transactionToEdit.amount) + Number(amountInpEl.value);
+    expensesEl.textContent = "₹" + finVars.expenses;
+  }
+  calculateBalance();
+
+  console.log(transactionToEdit);
+
+  // Update the 'transactionToEdit' object with the new values:
+  transactionToEdit.source = sourceInpEl.value;
+  transactionToEdit.amount = amountInpEl.value;
+  transactionToEdit.type = isCredit ? "Credit" : "Debit";
+  transactionToEdit.currBalance = finVars.balance;
+
+  // Update the 'editTransactionEl' on the webpage:
+  editTransElSource.textContent = sourceInpEl.value;
+  editTransElAmount.textContent = isCredit ? '+ ₹' + amountInpEl.value : "- ₹" + amountInpEl.value;
+  editTransElType.classList.remove("credit", "debit");
+  editTransElType.classList.add(isCredit ? "credit" : "debit");
+  editTransElType.textContent = isCredit ? "C" : "D";
+  
+  console.log(transactionToEdit, finVars.transactions);
 }
 
-// ----------------------- Define Event Listeners & Handlers for Transaction-Form --------------------
-transactionFormEl.addEventListener("submit", (event) => {
+// ---------------------------- Function to Handle the Transaction Form ----------------------------
+const handleTransactionForm = (event) => {
   event.preventDefault();
 
   let clickedBtn = event.submitter; // used to track the clicked button, either earnings-btn or expenses-btn
   let buttonText = clickedBtn.children[2].innerText.toLowerCase(); // get button text - "earnings" or "expenses"
 
+  //if the user is editing an existing transaction:
+  if(finVars.editTransactionEl != null) { 
+    swal({
+      title: "Are you sure?", 
+      text: "This action will update your transaction!",
+      icon: "warning",
+      buttons: [true, "Yes"],
+      dangerMode: true,
+    }).then( (result) => {
+      if(result) {
+        updateTransaction(buttonText); 
+        sourceInpEl.value = amountInpEl.value = ""; //empty the input fields
+        finVars.editTransactionEl = null; //reset the 'editTransactionEl' to null
+			  swal("Updated!", "Your transaction has been updated.", "success");
+      }
+      else { //if the user clicks on the "Cancel" button
+        swal("Safe!", "Your transaction is safe from any modifications.", "info");
+      }
+    });
+    return;
+  } 
+
+  // else, if the user is adding a new transaction:
   const newTransaction = calculateFinancialVariables(sourceInpEl.value, amountInpEl.value, buttonText);
   addTransactionEl(newTransaction);
 
   // Empty the Input-Fields:
   sourceInpEl.value = amountInpEl.value = "";
-});
+}
+
+// ----------------------------- Define the Financial Variables Object -----------------------------
+const finVars = {
+  earnings: 0,
+  expenses: 0,
+  balance: 0,
+  transactions: [],
+  editTransactionEl: null //used to store the transactionEl which is being edited
+}
+
+// ----------------------- Define Event Listeners & Handlers for Transaction-Form --------------------
+transactionFormEl.addEventListener("submit", handleTransactionForm);
