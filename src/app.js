@@ -187,17 +187,27 @@ const updateTransaction = (buttonText) => {
   let isCredit = buttonText === "earnings";
 
   // Update the Earnings, Expenses, and Balance:
-  if(isCredit) {
+  if(isCredit && transactionToEdit.type === "Credit") { //when the transaction is a credit transaction
     finVars.earnings = (finVars.earnings - transactionToEdit.amount) + Number(amountInpEl.value);
     earningsEl.textContent = "₹" + finVars.earnings;
   }
-  else {
+  else if(!isCredit && transactionToEdit.type === "Debit") { //when the transaction is a debit transaction
     finVars.expenses = (finVars.expenses - transactionToEdit.amount) + Number(amountInpEl.value);
     expensesEl.textContent = "₹" + finVars.expenses;
   }
+  else if(isCredit && transactionToEdit.type === "Debit") { //when the user wants to change the transaction from debit to credit, with source and amount
+    finVars.expenses -= transactionToEdit.amount;
+    finVars.earnings += Number(amountInpEl.value);
+    expensesEl.textContent = "₹" + finVars.expenses;
+    earningsEl.textContent = "₹" + finVars.earnings;
+  }
+  else if(!isCredit && transactionToEdit.type === "Credit") { //when the user wants to change the transaction from credit to debit, with source and amount
+    finVars.earnings -= transactionToEdit.amount;
+    finVars.expenses += Number(amountInpEl.value);
+    earningsEl.textContent = "₹" + finVars.earnings;
+    expensesEl.textContent = "₹" + finVars.expenses;
+  }
   calculateBalance();
-
-  console.log(transactionToEdit);
 
   // Update the 'transactionToEdit' object with the new values:
   transactionToEdit.source = sourceInpEl.value;
@@ -211,8 +221,6 @@ const updateTransaction = (buttonText) => {
   editTransElType.classList.remove("credit", "debit");
   editTransElType.classList.add(isCredit ? "credit" : "debit");
   editTransElType.textContent = isCredit ? "C" : "D";
-  
-  console.log(transactionToEdit, finVars.transactions);
 }
 
 // ---------------------------- Function to Handle the Transaction Form ----------------------------
@@ -233,13 +241,12 @@ const handleTransactionForm = (event) => {
     }).then( (result) => {
       if(result) {
         updateTransaction(buttonText); 
-        sourceInpEl.value = amountInpEl.value = ""; //empty the input fields
-        finVars.editTransactionEl = null; //reset the 'editTransactionEl' to null
 			  swal("Updated!", "Your transaction has been updated.", "success");
-      }
-      else { //if the user clicks on the "Cancel" button
+      } else { //if the user clicks on the "Cancel" button
         swal("Safe!", "Your transaction is safe from any modifications.", "info");
       }
+      sourceInpEl.value = amountInpEl.value = ""; //empty the input fields
+      finVars.editTransactionEl = null; //reset the 'editTransactionEl' to null
     });
     return;
   } 
