@@ -36,10 +36,10 @@ const deleteTransaction = (transactionEl) => {
 			}
 			calculateBalance();
 
-			swal("Deleted!", "Your transaction has been deleted.", {icon: "success",});
+			swal("Deleted!", "Your transaction has been deleted.",  "success");
     }
     else { //if the user clicks on the "Cancel" button
-      swal("Safe!", "Your transaction is safe and secure.", {icon: "info"});
+      swal("Safe!", "Your transaction is safe and secure from deletion.", "info");
     }
   });
 }
