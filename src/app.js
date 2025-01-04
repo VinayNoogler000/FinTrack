@@ -179,6 +179,14 @@ const calculateFinancialVariables = (source, amount, transactionCategory) => {
 
 // ---------------------------- Function to Update the Transaction ----------------------------
 const updateTransaction = (buttonText) => {
+  swal({
+    title: "Are you sure?", 
+    text: "This action will update your transaction!",
+    icon: "warning",
+    buttons: [true, "Yes"],
+    dangerMode: true,
+  }).then( (result) => {
+    if(result) {
   // Find the transaction which is being edited and update it:
   const transactionToEdit = finVars.transactions.find((transaction) => transaction.id === finVars.editTransactionEl.id);
   const editTransElSource = finVars.editTransactionEl.querySelector(".source");
@@ -221,6 +229,15 @@ const updateTransaction = (buttonText) => {
   editTransElType.classList.remove("credit", "debit");
   editTransElType.classList.add(isCredit ? "credit" : "debit");
   editTransElType.textContent = isCredit ? "C" : "D";
+
+      swal("Updated!", "Your transaction has been updated.", "success");
+    } 
+    else { //if the user clicks on the "Cancel" button
+      swal("Safe!", "Your transaction is safe from any modifications.", "info");
+    }
+    sourceInpEl.value = amountInpEl.value = ""; //empty the input fields
+    finVars.editTransactionEl = null; //reset the 'editTransactionEl' to null
+  });
 }
 
 // ---------------------------- Function to Handle the Transaction Form ----------------------------
@@ -232,30 +249,15 @@ const handleTransactionForm = (event) => {
 
   //if the user is editing an existing transaction:
   if(finVars.editTransactionEl != null) { 
-    swal({
-      title: "Are you sure?", 
-      text: "This action will update your transaction!",
-      icon: "warning",
-      buttons: [true, "Yes"],
-      dangerMode: true,
-    }).then( (result) => {
-      if(result) {
-        updateTransaction(buttonText); 
-			  swal("Updated!", "Your transaction has been updated.", "success");
-      } else { //if the user clicks on the "Cancel" button
-        swal("Safe!", "Your transaction is safe from any modifications.", "info");
-      }
-      sourceInpEl.value = amountInpEl.value = ""; //empty the input fields
-      finVars.editTransactionEl = null; //reset the 'editTransactionEl' to null
-    });
-    return;
+            updateTransaction(buttonText); 
+return;
   } 
 
   // else, if the user is adding a new transaction:
   const newTransaction = calculateFinancialVariables(sourceInpEl.value, amountInpEl.value, buttonText);
   addTransactionEl(newTransaction);
 
-  // Empty the Input-Fields:
+			    // Empty the Input-Fields:
   sourceInpEl.value = amountInpEl.value = "";
 }
 
