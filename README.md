@@ -7,10 +7,12 @@
 3. SweetAlert library for displaying stylish confirmation dialog boxes, which I specifically used to get confirmation from the user, whether or not to delete the transaction. 
 
 ## To-Do:
-1. Implement a feature to store all the user's transaction locally, in their browsers, by using `localStorage API` so that  when they revisit the website, their past transactions will be accessible, instead of a blank transactions-section.
-2. Implement Backend by using Express.js and RESTful APIs.
-3. Build 'Search' transactions feature, which will filter transactions, based on source, amount or type of transactions.
-4. Implement a feature to add the date of transaction.
-5. Add a feature in which the present month will be the month for which transactions are added in the app.
-6. Build a functionality to generate monthly income/P&L statement in PDF format, and the user can decide the monthl for which he/she want the statement.
-7. Implement User Authentication.
+1. Add a feature to ask the user that whether they want to save the transactions locally in the browser or not, by using `swal` library confirmation box, when user has added their first transaction.
+2. Implement a feature to store all the user's transaction locally, in their browsers, by using `localStorage API` so that when they revisit the website, their past transactions will be accessible, instead of a blank transactions-section.
+3. Implement Backend by using Express.js and RESTful APIs.
+4. Build 'Search' transactions feature, which will filter transactions, based on source, amount or type of transactions.
+5. Implement a feature to add the date of transaction.
+6. Add a feature in which the present month will be the month for which transactions are added in the app.
+7. Build a functionality to generate monthly income/P&L statement in PDF format, and the user can decide the monthl for which he/she want the statement.
+8. Implement User Authentication.
+9. Add a feature to add and edit notes for each transactions.
