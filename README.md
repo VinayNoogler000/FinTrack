@@ -6,7 +6,8 @@
 2. Skypack CDN service for easily importing and using NPM packages--like UUID library--into the browser, as ES modules.
 3. SweetAlert library for displaying stylish confirmation dialog boxes, which I specifically used to get confirmation from the user, whether or not to delete the transaction. 
 4. About `localStorage` API, it's key features and ways to manipulate data in the localStorage using it's methods.
-5. Difference between `window` DOM `load` and `DOMContentLoaded` events.  
+5. Difference between `window` DOM `load` and `DOMContentLoaded` events.
+6. Troubleshooting unable to importing NPM packages as ES6 modules, in a project, because of incorrect references.
 
 ## To-Do:
 1. Add a feature to ask the user that whether they want to save the transactions locally in the browser or not, by using `swal` library confirmation box, when user has added their first transaction.
