@@ -1,4 +1,4 @@
-// ----------- Require UUID Library for Generating Unique Transaction IDs: -----------
+// ----------- Require NPM Packages by using SkyPack CDN -----------
 import { v4 as uuidv4 } from 'https://cdn.skypack.dev/uuid';
 import swal from 'https://cdn.skypack.dev/sweetalert';
 
