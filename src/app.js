@@ -1,10 +1,11 @@
-// ----------- Require NPM Packages by using SkyPack CDN -----------
+// ----------- Require NPM Packages -----------
 import { v7 as uuidv7 } from '../node_modules/uuid/dist/esm-browser/index.js';
 import swal from 'https://cdn.skypack.dev/sweetalert';
 
 window.addEventListener("DOMContentLoaded", () => {
   // ------------------------ Select the Globally Required HTML-DOM Elements -----------------------
   const transactionFormEl = document.querySelector(".transaction-form"); //transaction-form-element
+  const hideFormBtnEl = document.querySelector(".transaction-form .hide-btn"); //hide-form-button-element 
   const sourceInpEl = document.querySelector("#sourceInp");
   const amountInpEl = document.querySelector("#amountInp");
   const earningsEl = document.querySelector("#earnings");
@@ -264,6 +265,12 @@ window.addEventListener("DOMContentLoaded", () => {
     sourceInpEl.value = amountInpEl.value = "";
   }
   
+  // ------------------------ Function to Hide the Transaction Form ------------------------
+  const hideTransactionForm = () => {
+    transactionFormEl.classList.toggle("hide-form");
+    hideFormBtnEl.classList.toggle("rotate");
+  }      
+  
   // ------------------------ Function to Store the Financial Variables in the LocalStorage ------------------------
   const finVarsStorage = () => {
     if(!localStorage.getItem("finVars")) { //if the 'finVars' object is not present in the localStorage
@@ -294,4 +301,5 @@ window.addEventListener("DOMContentLoaded", () => {
   
   // ----------------------- Define Event Listeners & Handlers for Transaction-Form --------------------
   transactionFormEl.addEventListener("submit", handleTransactionForm);
+  hideFormBtnEl.addEventListener("click", hideTransactionForm);
 });

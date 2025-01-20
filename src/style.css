@@ -91,7 +91,7 @@
     }
 
     .transaction-form {
-        @apply w-full p-8 bg-white absolute bottom-0 flex flex-col items-start;
+        @apply w-full p-8 bg-white absolute bottom-0 flex flex-col items-start smooth-transition;
     }
 
     .transaction-form .top {
@@ -143,6 +143,17 @@
         @apply bg-[var(--red)];
     }
 
+    .transaction-form.hide-form {
+        @apply translate-y-[72.5%];
+    }
+
+    .transaction-form .hide-btn {
+        @apply smooth-transition;
+    }
+
+    .transaction-form .hide-btn.rotate {
+        @apply rotate-180;
+    }
     
     @media (max-width: 820px) {
         .transaction-form .top abbr {
