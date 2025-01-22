@@ -43,11 +43,17 @@
     }
 
     .transactions-container {
-        @apply mt-5 flex-column gap-5;
+        @apply w-full max-h-[70%] mt-5 flex-column gap-5 overflow-y-auto;
+        -webkit-overflow-scrolling: touch; /* For smooth scrolling on Android & iOS */
+    }
+
+    /* Hide the scrollbar in transactions container */
+    .transactions-container::-webkit-scrollbar {
+        width: 0; /* For Webkit browsers (Chrome, Safari, Edge) */
     }
 
     .transactions {
-        @apply w-full text-base text-black font-semibold bg-white rounded-md overflow-hidden flex flex-col smooth-transition hover-effect opacity-85;
+        @apply w-[98%] max-w-full shrink-0 text-base text-black font-semibold bg-white rounded-md overflow-hidden flex flex-col smooth-transition hover-effect opacity-85;
     }
 
     .transactions .main {
