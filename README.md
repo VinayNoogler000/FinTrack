@@ -21,6 +21,8 @@ Whether you are looking to keep track of your daily expenses or manage your mont
 
 ## 🎥 Demo
 
+![FinTrack App](https://github.com/VinayNoogler000/FinTrack/blob/main/assets/Demo.gif?raw=true)
+
 ## 🛠 Technologies Used
 
 - **HTML5**: Provides the structure and content of the web page.
@@ -139,7 +141,7 @@ I would like to thank the following resources and tools that made this project p
 - [Git](https://git-scm.com/) for version control.
 - [Node.js](https://nodejs.org/) for running backend services and using npm packages.
 - [VSCode](https://code.visualstudio.com/) for being an excellent code editor.
-- [DoSomeCoding YT Channel](https://www.youtube.com/watch?v=fKhjFGBt4lc), the most important one, as [He](https://github.com/anshuopinion) gave me and other beginners the idea of building this FinTrack web app, and also provided us it's basic design. So, Thank you so much to, [Anshu bhaiya](https://www.linkedin.com/in/anshuopinion) again for giving me the idea and designs of multiple frontend project, to strengthen my fundamentals.
+- [DoSomeCoding YT Channel](https://www.youtube.com/watch?v=fKhjFGBt4lc), the most important one, as [He](https://github.com/anshuopinion) gave me and other beginners the idea of building this FinTrack web app, and also provided us with it's basic design. So, Thank you so much to, [Anshu bhaiya](https://www.linkedin.com/in/anshuopinion) again for giving me the idea and designs of multiple frontend project, to strengthen my fundamentals.
 
 ## 💼 Careers
 
