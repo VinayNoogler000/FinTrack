@@ -1,5 +1,5 @@
 // ----------- Require NPM Packages -----------
-import uuid from 'https://cdn.skypack.dev/uuid';
+import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
 import swal from 'https://cdn.skypack.dev/sweetalert';
 
 window.addEventListener("DOMContentLoaded", () => {
