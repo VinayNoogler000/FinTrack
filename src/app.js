@@ -1,5 +1,5 @@
 // ----------- Require NPM Packages -----------
-import { v7 as uuidv7 } from '../node_modules/uuid/dist/esm-browser/index.js';
+import uuid from 'https://cdn.skypack.dev/uuid';
 import swal from 'https://cdn.skypack.dev/sweetalert';
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -161,7 +161,7 @@ window.addEventListener("DOMContentLoaded", () => {
   
   // ------- Function to Calculate Earnings, Expenses, and Balance & Return the New Transaction --------
   const calculateFinancialVariables = (source, amount, transactionCategory) => {
-    const newTransaction = {source, amount, type: undefined, currBalance: undefined, id: uuidv7()};
+    const newTransaction = {source, amount, type: undefined, currBalance: undefined, id: uuid()};
   
     if (transactionCategory === "earnings") {
       newTransaction.type = "Credit";
